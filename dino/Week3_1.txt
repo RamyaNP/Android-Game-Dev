@@ -1,0 +1,164 @@
+package com.pratik.flapybird;
+//You will get error in above line. Fix it by directing it to correct package name.
+// The one you had defined while generating project in libGDX
+
+import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Gdx;                       // Do not modify
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
+import java.util.Random;
+
+/**
+ * Created by pratik on 11,September,2019
+ */
+
+
+// You will get compilation error in below line. Fix that by renaming it to the class name you have defined earlier
+
+// public class 'your class name' extends ApplicatonAdapter{
+public class test extends ApplicationAdapter {
+
+   // Do not modify initialization code given below
+
+    private SpriteBatch batch;
+    private Texture background,topTube,bottomTube;
+    private Texture[] birds;
+    private int[] offset,tubeX ;
+    private int flapState,velocity,distanceBetweenTubes,gap=400;
+    private int birdY,gameState=0;
+    private float gravity = 1.5f;
+    private Random random;
+
+
+
+    /**
+     *
+     * Week 3 - Assignment 1
+     * -> There are 5 tasks given to you in this file. Completing all 5 tasks will reward full marks
+     * -> Do not modify existing code. Modify code only where you are told to do.
+     * -> Wherever you find a '  / ...  '  means you have to type the code there.
+     * -> Instructions on what to type would be given on its respective lines above it
+     * -> Since each task is heavily dependent on each other, make sure you try to attempt all the tasks properly
+     *
+     */
+
+
+
+    @Override
+    public void create () {
+
+
+        batch = new SpriteBatch();
+        background = new Texture("bg.png");
+        topTube = new Texture("toptube.png");
+        bottomTube = new Texture("bottomtube.png");
+        birds = new Texture[2];
+
+        tubeX = new int[4];                               // array of 4 tubes
+        offset = new int[4];                             // different offset for different tubes
+
+        birds[0] = new Texture("bird.png");
+        birds[1] = new Texture("bird2.png");
+
+        birdY = Gdx.graphics.getHeight()/2-birds[flapState].getHeight()/2;  // Y coordinate of the bird
+        distanceBetweenTubes = Gdx.graphics.getWidth()*3/4;    // for every distance 0.75 of screen width, new tube is generated
+
+        random = new Random();
+
+        /**
+         * initialize set of 4 tubes with different offset for each tube when app is opened
+         * */
+        for(int i=0;i<4;i++){
+
+            //TODO: Task1 -  define offset of tubes and distance of 4 tubes from center of the screen here
+
+            //define each tube offset
+            // offset[i] = ...
+
+            //define each tube distance relative to first tube generated
+            //tubeX[i] = ...
+
+        }
+
+    }
+
+    @Override
+    public void render () {
+
+        batch.begin();
+        batch.draw(background, 0,0,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
+        if(Gdx.input.justTouched()){
+
+            gameState = 1;
+            velocity = -30;
+
+        }
+
+        if(gameState == 1) {
+
+            if (flapState == 0)
+                flapState = 1;
+            else
+                flapState = 0;
+
+            if (birdY > 0 || velocity < 0) {
+                //TODO: Task2 - make the bird flap
+                //handle the flapping of the bird using velocity ,gravity and birdY variable
+
+                // ...
+            }
+
+
+            /**
+             *  This for loop checks if tube has moved away from screen. If yes then generate a tube
+             */
+            for (int i = 0; i < 4; i++) {
+
+                //TODO: Task3 - calculate each tube distance and if the tube is out of the screen, generate new tube
+                //use if and else statement
+                //if tube is not visible, generate new tube else reduce tubeX by 4
+
+                /**
+                 *  NOTE: remove the comments before you type your code
+                 * if ( // ...) {
+                 *
+                 *       // ...
+                 *
+                 *     } else
+                 *       // ...
+                 *
+                 * */
+
+
+
+                batch.draw(topTube, tubeX[i], Gdx.graphics.getHeight() / 2 + gap / 2 + offset[i]);
+
+                //TODO: Task4 - draw bottomTube. Use reference of topTube to draw
+                //batch.draw(bottomTube,     // ...    );
+            }
+
+        }
+
+
+        batch.draw(birds[flapState],Gdx.graphics.getWidth()/2f-birds[flapState].getWidth()/2f,birdY);
+        batch.end();
+    }
+
+    @Override
+    public void dispose () {
+        batch.dispose();
+        background.dispose();
+    }
+
+
+    //TODO: Task5 - Make sure the code compiles and your app does not crash
+
+
+
+
+
+    //You can use this code as a template code to build the chrome dino game.
+
+}
